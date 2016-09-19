@@ -1,2 +1,5 @@
-# Django & jQuery Chat Application
-This is a very simple chat application made with Django 1.8 and jQuery. Watch the video demonstration on YouTube https://youtu.be/Z8Gjm858CWg. For more queries email me at hasan.mohaiminul@gmail.com
+# Chatbot and Django
+1. Run python manage.py migrate
+2. Run python manage.py runserver
+3. Go to http://127.0.0.1:8000/Login
+4. User: admin, Pass: admin

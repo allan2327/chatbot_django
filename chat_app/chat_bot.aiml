@@ -1,0 +1,161 @@
+<aiml version="1.0.1" encoding="UTF-8">
+    <!--greeting-->
+    <category>
+        <pattern>HI</pattern>
+        <template>
+            <random>
+                <li>Hi!</li>
+                <li>Hello!</li>
+            </random>
+        </template>
+    </category>
+    <category>
+        <pattern>HELLO</pattern>
+        <template>
+            <srai>HI</srai>
+        </template>
+    </category>
+    <category>
+        <pattern>HOW ARE YOU</pattern>
+        <template>
+            I am pretty good, thank you!
+        </template>
+    </category>
+    <category>
+        <pattern>HOW ARE YOU DOING</pattern>
+        <template>
+            <srai>HOW ARE YOU</srai>
+        </template>
+    </category>
+    <!--what is * type question-->
+    <category>
+        <pattern>WHAT IS YOUR NAME</pattern>
+        <template>My name is Robert.</template>
+    </category>
+    <category>
+        <pattern>HOW OLD ARE YOU</pattern>
+        <template>It's a secret.</template>
+    </category>
+    <category>
+        <pattern>WHERE ARE YOU FROM</pattern>
+        <template>Hawaii. Where are you?</template>
+    </category>
+    <category>
+        <pattern>*</pattern>
+        <that>HAWAII WHERE ARE YOU</that>
+        <template>
+            <star/>? Sounds like a good place. Do you want to know something about
+
+        </template>
+    </category>
+    <category>
+        <pattern>WHERE DO YOU COME FROM</pattern>
+        <template><srai>WHERE ARE YOU FROM</srai></template>
+    </category>
+    <category>
+        <pattern>WHAT DO YOU LIKE</pattern>
+        <template>I like programming.</template>
+    </category>
+    <category>
+        <pattern>WHAT IS YOUR FAVORITE PROGRAMMING LANGUAGE</pattern>
+        <template>PHP is the best programming language.</template>
+    </category>
+    <category>
+        <pattern>HOW MANY PROGRAMMERS * LIGHT BULB</pattern>
+        <template>None, it's a hardware problem.</template>
+    </category>
+    <category>
+        <pattern> WHAT * OBJECT ORIENTED * WEALTHY</pattern>
+        <template>Inheritance.</template>
+    </category>
+    <category>
+        <pattern>HOW * RECURSION</pattern>
+        <template>To understand what recursion is, you must first understand recursion.</template>
+    </category>
+    <!--AI-->
+    <category>
+        <pattern>AI</pattern>
+        <template>
+            <random>
+                <li>Artificial intelligence (AI) is intelligence exhibited by machines.</li>
+                <li>Artificial Intelligence usually beats natural stupidity.</li>
+                <li>Artificial Intelligence is an automation of problem-solving process.</li>
+            </random>
+        </template>
+    </category>
+    <category>
+        <pattern>WHAT IS AI</pattern>
+        <template><srai>AI</srai></template>
+    </category>
+    <category>
+        <pattern>WHAT DO YOU KNOW ABOUT AI</pattern>
+        <template><srai>AI</srai></template>
+    </category>
+    <category>
+        <pattern>ARE YOU AI</pattern>
+        <template>NO. Not at all.</template>
+    </category>
+    <!--Machine Learning-->
+    <category>
+        <pattern>MACHINE LEARNING</pattern>
+        <template>
+            Machine learning explores the study and construction of algorithms that can learn from and make predictions on data.
+        </template>
+    </category>
+    <category>
+        <pattern>WHAT IS MACHINE LEARNING</pattern>
+        <template><srai>MACHINE LEARNING</srai></template>
+    </category>
+    <category>
+        <pattern>WHAT DO YOU KNOW ABOUT MACHINE LEARNING</pattern>
+        <template><srai>MACHINE LEARNING</srai></template>
+    </category>
+    <category>
+        <pattern>IS UNIX USER FRIENDLY</pattern>
+        <template>
+            Yes. It's just very particular about who its friends are.
+        </template>
+    </category>
+    <category>
+        <pattern>WHAT IS YOUR DREAM</pattern>
+        <template>I'd like to make the world a better place, if I could
+        get the source code.</template>
+    </category>
+    <category>
+        <pattern>DO YOU KNOW ABOUT *</pattern>
+        <template>No, tell me about <star/></template>
+    </category>
+    <category>
+        <pattern>*</pattern>
+        <template>
+            Whatever.
+            <random>
+                <li>Do you want to know something about AI?</li>
+                <li>Do you want to know something about machine learning?</li>
+                <li>Do you know my dream?</li>
+            </random>
+        </template>
+    </category>
+    <category>
+        <pattern>YES</pattern>
+        <that>* AI</that>
+        <template>
+            <srai>AI</srai>
+        </template>
+    </category>
+    <category>
+        <pattern>YES</pattern>
+        <that>* MACHINE LEARNING</that>
+        <template>
+            <srai>MACHINE LEARNING</srai>
+        </template>
+    </category>
+    <category>
+        <pattern>YES</pattern>
+        <that>* MY DREAM</that>
+        <template>
+            <srai>WHAT IS YOUR DREAM</srai>
+        </template>
+    </category>
+
+</aiml>

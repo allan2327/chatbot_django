@@ -15,6 +15,8 @@ $('#chat-form').on('submit', function(event){
     });
 });
 
+
+
 function getMessages(){
     if (!scrolling) {
         $.get('/messages/', function(messages){

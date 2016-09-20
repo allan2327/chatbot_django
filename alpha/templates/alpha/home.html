@@ -6,7 +6,145 @@
     <title>Chat Panel</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'chat.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'chat.css' %}"> -->
+
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        body{
+    height: 100%;
+box-shadow: 0px 0px 5rem rgba(0, 0, 0, 0.5) inset;
+background-color: #333;
+}
+.col-md-2, .col-md-10{
+    padding:0;
+}
+.panel{
+    margin-bottom: 0px;
+}
+/*.chat-window{
+    bottom:0;
+    position:fixed;
+    float:right;
+    margin-left:10px;
+}*/
+.chat-window > div > .panel{
+    border-radius: 5px 5px 0 0;
+}
+.icon_minim{
+    padding:2px 10px;
+}
+.msg_container_base{
+  background: #e5e5e5;
+  margin: 0;
+  padding: 0 10px 10px;
+  max-height:300px;
+  overflow-x:hidden;
+}
+.top-bar {
+  background: #666;
+  color: white;
+  padding: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.msg_receive{
+    padding-left:0;
+    margin-left:0;
+}
+.msg_sent{
+    padding-bottom:20px !important;
+    margin-right:0;
+}
+.messages {
+  background: white;
+  padding: 10px;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  max-width:100%;
+}
+.messages > p {
+    font-size: 13px;
+    margin: 0 0 0.2rem 0;
+  }
+.messages > time {
+    font-size: 11px;
+    color: #ccc;
+}
+.msg_container {
+    padding: 10px;
+    overflow: hidden;
+    display: flex;
+}
+img {
+    display: block;
+    width: 100%;
+}
+.avatar {
+    position: relative;
+}
+.base_receive > .avatar:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border: 5px solid #FFF;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.base_sent {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.base_sent > .avatar:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border: 5px solid white;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    box-shadow: 1px 1px 2px rgba(black, 0.2); // not quite perfect but close
+}
+
+.msg_sent > time{
+    float: right;
+}
+
+
+
+.msg_container_base::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+.msg_container_base::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+.msg_container_base::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+
+.msg_container p{
+    font-size: 18px;
+}
+
+.btn-group.dropup{
+    position:fixed;
+    left:0px;
+    bottom:0;
+}
+    </style>
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -16,7 +154,93 @@
 </head>
 
 <body>
-    <div id="chat-body" class="panel panel-default">
+    <div class="container">
+      <div class="jumbotron" >
+        <h1>Robert Wisgy,</h1>
+        <h2>    a CS Guy</h2>
+        <p>CS-527 An Introduction to Artifcial Intelligence <br>Program 1- Part 2- Turing Test chatbot</p>
+        <h2>By Zhu Li, Hooman Rokham</h2>
+      </div>
+        <div class="row chat-window col-md-6 col-md-offset-3" id="chat_window_1" >
+            <div class="col-xs-12 col-md-12">
+                <div id="chat-body" class="panel panel-default">
+                    <div class="panel-heading top-bar">
+                        <div class="col-md-8 col-xs-8">
+                            <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> AI Chatbot</h3>
+                        </div>
+                        <div class="col-md-4 col-xs-4" style="text-align: right;">
+                            <a id="logoutbtn" href="/logout">logout <span class="glyphicon glyphicon-remove icon_close" data-id="chat_window_1"></span></a>
+                        </div>
+                    </div>
+                    <div id="msg-list-div" class="panel-body msg_container_base">
+                        <div id="msg-list">
+                            {% for obj in chat %}
+                                {% if obj.user == request.user %}
+                                    <div class="row msg_container base_sent">
+                                        <div class="col-md-10 col-xs-10">
+                                            <div class="messages msg_sent">
+                                                <p>{{ obj.message }}</p>
+                                                <!-- <time datetime="2009-11-13T20:00">Timothy • 51 min</time> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-xs-2 avatar">
+                                            <img src="https://www.b1g1.com/assets/admin/images/no_image_user.png" class=" img-responsive ">
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="row msg_container base_receive">
+                                        <div class="col-md-2 col-xs-2 avatar">
+                                            {% load staticfiles %}
+                                            <img src="{% static 'chatbotroll.jpg' %}" class=" img-responsive ">
+                                        </div>
+                                        <div class="col-md-10 col-xs-10">
+                                            <div class="messages msg_receive">
+                                                <p>{{ obj.message }}</p>
+                                                <!-- <time datetime="2009-11-13T20:00">Timothy • 51 min</time> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% empty %}
+                                <div class="row msg_container base_sent">
+                                    <div class="col-md-10 col-xs-10">
+                                        <div class="messages msg_sent">
+                                            <p>No messages yet!</p>
+                                            <!-- <time datetime="2009-11-13T20:00">Timothy • 51 min</time> -->
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-2 col-xs-2 avatar">
+                                        <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+                                    </div> -->
+                                </div>
+                            {% endfor %}
+                            <script>
+                                var chatlist = document.getElementById('msg-list-div');
+                                chatlist.scrollTop = chatlist.scrollHeight;
+                            </script>
+
+                        </div>
+
+                    </div>
+                    
+                </div>
+
+                <div class="panel-footer">
+                    <form id="chat-form" method="post" action="/post/">
+                        <div id="chat-bottom" class="input-group">
+                            <input type="text" id="chat-msg" name="chat-msg" class="form-control input-sm chat_input" placeholder="Write your message here..." />
+                            <span class="input-group-btn">
+                                <input id="send" type="submit" value="Send" class="btn btn-primary btn-sm">
+                            </span>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- <div id="chat-body" class="panel panel-default">
         <div class="panel-heading">Chat Box</div>
         <div id="msg-list-div" class="panel-body">
             <ul id="msg-list" class="list-group">
@@ -35,16 +259,16 @@
                 </script>
             </ul>
         </div>
-    </div>
+    </div> -->
 
-    <form id="chat-form" method="post" action="/post/">
+    <!-- <form id="chat-form" method="post" action="/post/">
         <div id="chat-bottom" class="input-group">
             <input type="text" id="chat-msg" name="chat-msg" class="form-control"/>
             <span class="input-group-btn">
                 <input class="btn btn-default" id="send" type="submit" value="Send"/>
             </span>
         </div>
-    </form>
+    </form> -->
 </body>
 
 <script src="{% static 'chat.js' %}"></script>

@@ -3,25 +3,25 @@ from django.contrib.auth import authenticate, logout, login
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from chat_app import settings
 from chat_app import Kernel
+from django.contrib.auth.models import User
+from .models import Chat
+
 kernel = Kernel()
 kernel.learn("chat_app/std-startup.xml")
 kernel.respond("load aiml")
 
 kernel.respond("Hi")
 kernel.learn("std-startup.xml")
-# while True:
-#     print kernel.respond(raw_input("> "))
-
-# while True:
-#     print kernel.respond("")
 
 def askquestion(stringinput):
-    kernel.learn("std-startup.xml")
     return kernel.respond(stringinput)
 
-from .models import Chat
+chatbotuser = User.objects.get(username='chatbot')
+
+
 
 def Login(request):
+    Chat.objects.all().delete()
     next = request.GET.get('next', '/home/')
     if request.method == "POST":
         username = request.POST['username']
@@ -50,9 +50,10 @@ def Post(request):
     if request.method == "POST":
         msg = request.POST.get('msgbox', None)
         c = Chat(user=request.user, message=msg)
-        askquestion("Hi")
+        chatbotresponse = Chat(user=chatbotuser, message=askquestion(str(msg)))
         if msg != '':
             c.save()
+        chatbotresponse.save()
         return JsonResponse({ 'msg': msg, 'user': c.user.username })
     else:
         return HttpResponse('Request must be POST.')

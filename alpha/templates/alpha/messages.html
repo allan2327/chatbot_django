@@ -1,9 +1,40 @@
 {% for obj in chat %}
     {% if obj.user == request.user %}
-        <li class="text-right list-group-item">{{ obj.message }}</li>
+        <div class="row msg_container base_sent">
+            <div class="col-md-10 col-xs-10">
+                <div class="messages msg_sent">
+                    <p>{{ obj.message }}</p>
+                    <!-- <time datetime="2009-11-13T20:00">Timothy • 51 min</time> -->
+                </div>
+            </div>
+            <div class="col-md-2 col-xs-2 avatar">
+                <img src="https://www.b1g1.com/assets/admin/images/no_image_user.png" class=" img-responsive ">
+            </div>
+        </div>
     {% else %}
-        <li class="text-left list-group-item">{{ obj.message }}</li>
+        <div class="row msg_container base_receive">
+            <div class="col-md-2 col-xs-2 avatar">
+            	{% load staticfiles %}
+                <img src="{% static 'chatbotroll.jpg' %}" class=" img-responsive ">
+            </div>
+            <div class="col-md-10 col-xs-10">
+                <div class="messages msg_receive">
+                    <p>{{ obj.message }}</p>
+                    <!-- <time datetime="2009-11-13T20:00">Timothy • 51 min</time> -->
+                </div>
+            </div>
+        </div>
     {% endif %}
 {% empty %}
-    <li class="text-right list-group-item">No messages yet!</li>
+    <div class="row msg_container base_sent">
+        <div class="col-md-10 col-xs-10">
+            <div class="messages msg_sent">
+                <p>No messages yet!</p>
+                <!-- <time datetime="2009-11-13T20:00">Timothy • 51 min</time> -->
+            </div>
+        </div>
+        <!-- <div class="col-md-2 col-xs-2 avatar">
+            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+        </div>
+ -->    </div>
 {% endfor %}
